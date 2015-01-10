@@ -3,8 +3,13 @@
 echo "BUILD_DIR: ${BUILD_DIR}"
 echo "CONFIGURATION: ${CONFIGURATION}"
 
-FRAMEWORK_DIR="${SRCROOT}/../${PRODUCT_NAME}.framework"
+FRAMEWORK_POOL_DIR="${SRCROOT}/../Framework"
+FRAMEWORK_DIR="${FRAMEWORK_POOL_DIR}/${PRODUCT_NAME}.framework"
+FRAMEWORK_HEADERS_DIR="${FRAMEWORK_DIR}/Headers"
 echo "Framework directory: ${FRAMEWORK_DIR}"
+
+OUTPUT_HEADERS_DIR="${BUILT_PRODUCTS_DIR}${PUBLIC_HEADERS_FOLDER_PATH}"
+echo "Output headers directory: ${OUTPUT_HEADERS_DIR}"
 
 function CreateFrameworkDir() {
   if [ -e ${FRAMEWORK_DIR} ] ; then
@@ -13,8 +18,9 @@ function CreateFrameworkDir() {
     rm -rf ${FRAMEWORK_DIR}
   fi
   echo "... Create Framework directory."
+  mkdir ${FRAMEWORK_POOL_DIR}
   mkdir ${FRAMEWORK_DIR}
-  mkdir "${FRAMEWORK_DIR}/Headers"
+  mkdir ${FRAMEWORK_HEADERS_DIR}
 }
 
 function Build() {
@@ -31,7 +37,7 @@ function Build() {
     BUILD_DIR=$(BUILD_DIR) \
     BUILD_ROOT=$(BUILD_ROOT)
 
-  $(build_command} -sdk ${TARGET_SDK}
+  $(build_command) -sdk ${TARGET_SDK}
   echo "TARGET_SDK: ${TARGET_SDK}"
 }
 
@@ -41,8 +47,15 @@ CreateFrameworkDir
 LIBS=$(find "${BUILD_DIR}" -name '*.a')
 echo ${LIBS}
 
+LIB=${LIBS[0]}
+echo "Lib file's path: ${LIB}"
+
+cp ${LIB} "${FRAMEWORK_DIR}/"
+cp "${OUTPUT_HEADERS_DIR}/"*.h "${FRAMEWORK_HEADERS_DIR}/"
+
 #ビルドを実行
 #for (sdks) {
 #  Build ${SDK}
 #}
-#
+
+
