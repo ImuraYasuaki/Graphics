@@ -99,7 +99,9 @@
     frame.size = size;
     [functionsView setFrame:frame];
     [functionsView setPosition:position];
-    [functionsView hide];
+
+    frame.origin = [functionsView hiddenPosition];
+    [functionsView setFrame:frame];
 
     return functionsView;
 }
@@ -140,10 +142,9 @@
     frame.origin = [self hiddenPosition];
     [self setFrame:frame];
 
-    CGRect functionsViewFrame = self.bounds;
-    functionsViewFrame.origin = self.shownPosition;
+    frame.origin = self.shownPosition;
     [UIView animateWithDuration:self.animationDuration animations:^{
-        [self setFrame:functionsViewFrame];
+        [self setFrame:frame];
         [self setAlpha:self.visibleAlpha];
     } completion:^(BOOL finished) {
         // nothing to do ...
