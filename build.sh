@@ -54,12 +54,8 @@ echo ${LIBS}
 LIB=${LIBS[0]}
 echo "Lib file's path: ${LIB}"
 
-INFOPLIST_FILE=$(find "${BUILT_PRODUCTS_DIR}" -name "Info.plist")
-echo ${INFOPLIST_FILE}
-
 cp ${LIB} "${FRAMEWORK_DIR}/"
 cp "${OUTPUT_HEADERS_DIR}/"* "${FRAMEWORK_HEADERS_DIR}/"
-cp ${INFOPLIST_FILE} "${FRAMEWORK_DIR}/"
 
 #ビルドを実行
 #for (sdks) {
