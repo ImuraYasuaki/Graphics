@@ -12,13 +12,17 @@ OUTPUT_HEADERS_DIR="${BUILT_PRODUCTS_DIR}${PUBLIC_HEADERS_FOLDER_PATH}"
 echo "Output headers directory: ${OUTPUT_HEADERS_DIR}"
 
 function CreateFrameworkDir() {
+  if [ -e ${FRAMEWORK_POOL_DIR} ] ; then
+   echo "exists framework pool directory: ${FRAMEWORK_POOL_DIR}"
+  else
+    mkdir ${FRAMEWORK_POOL_DIR}
+  fi
   if [ -e ${FRAMEWORK_DIR} ] ; then
     echo "... Framework directory is exists.\nRecreate ... "
 
     rm -rf ${FRAMEWORK_DIR}
   fi
   echo "... Create Framework directory."
-  mkdir ${FRAMEWORK_POOL_DIR}
   mkdir ${FRAMEWORK_DIR}
   mkdir ${FRAMEWORK_HEADERS_DIR}
 }
@@ -50,8 +54,12 @@ echo ${LIBS}
 LIB=${LIBS[0]}
 echo "Lib file's path: ${LIB}"
 
+INFOPLIST_FILE=$(find "${BUILT_PRODUCTS_DIR}" -name "Info.plist")
+echo ${INFOPLIST_FILE}
+
 cp ${LIB} "${FRAMEWORK_DIR}/"
-cp "${OUTPUT_HEADERS_DIR}/"*.h "${FRAMEWORK_HEADERS_DIR}/"
+cp "${OUTPUT_HEADERS_DIR}/"* "${FRAMEWORK_HEADERS_DIR}/"
+cp ${INFOPLIST_FILE} "${FRAMEWORK_DIR}/"
 
 #ビルドを実行
 #for (sdks) {

@@ -82,7 +82,6 @@
 
         UIView *view = [[UIView alloc] initWithFrame:button.bounds];
         [view setBackgroundColor:[UIColor defaultOverlayBackgroundColor]];
-        [view setBackgroundColor:[UIColor blackColor]];
         [view addSubview:button];
         [view sizeToFit];
 

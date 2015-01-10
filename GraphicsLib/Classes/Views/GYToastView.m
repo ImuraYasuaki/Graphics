@@ -7,6 +7,7 @@
 //
 
 #import "GYToastView.h"
+#import "UIView+Defaults.h"
 
 NSTimeInterval const GYToastViewDurationShort = 1.0;
 NSTimeInterval const GYToastViewDurationLong = 3.0;
@@ -31,7 +32,7 @@ NSTimeInterval const GYToastViewDurationLong = 3.0;
         _message = message;
         _duration = duration;
         _animationDuration = GYToastViewDurationShort;
-        _maximumAlpha = 0.8f;
+        _maximumAlpha = [UIColor defaultStrongAlpha];
 
         [self setBackgroundColor:[UIColor blackColor]];
     }
